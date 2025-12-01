@@ -17,14 +17,14 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black transition-colors duration-300">
+    <div className="h-screen flex flex-col bg-gray-50 dark:bg-black transition-colors duration-300 overflow-hidden">
       <Header
         theme={theme}
         onToggleTheme={toggleTheme}
         isConnected={isConnected}
       />
 
-      <main className="container mx-auto px-4 py-6">
+      <main className="flex-1 w-full px-4 py-4 overflow-auto">
         {error && !isConnected && (
           <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
@@ -41,14 +41,14 @@ export default function Home() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full max-w-full">
           {/* Video Feed - Takes 2 columns on large screens */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 flex flex-col">
             <VideoFeed theme={theme} />
           </div>
 
           {/* Statistics Dashboard - Takes 1 column on large screens */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 flex flex-col">
             {isLoading && !isConnected ? (
               <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 flex items-center justify-center">
                 <div className="flex flex-col items-center gap-3">
@@ -65,8 +65,8 @@ export default function Home() {
         </div>
 
         {/* Footer Info */}
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-4 text-center">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             Real-time YOLOv8 Detection System • Updates every 500ms
           </p>
         </div>

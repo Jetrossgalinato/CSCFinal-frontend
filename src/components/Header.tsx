@@ -35,10 +35,10 @@ export default function Header({
   }, []);
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-800">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+    <header className="bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
+      <div className="w-full px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">
             🛸 Drone Surveillance System
           </h1>
           <div className="flex items-center gap-2">
@@ -54,7 +54,7 @@ export default function Header({
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="hidden sm:block text-sm font-mono text-gray-600 dark:text-gray-400">
+          <div className="text-sm font-mono text-gray-600 dark:text-gray-400">
             {currentTime}
           </div>
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />

@@ -37,8 +37,8 @@ export default function VideoFeed({}: VideoFeedProps) {
   };
 
   return (
-    <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
+    <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden flex flex-col h-full">
+      <div className="p-3 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between flex-shrink-0">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
           Live Video Feed
         </h2>
@@ -61,10 +61,10 @@ export default function VideoFeed({}: VideoFeedProps) {
       </div>
 
       <div
-        className={`relative ${
+        className={`relative flex-1 min-h-0 ${
           isFullscreen
             ? "fixed inset-0 z-50 bg-black"
-            : "aspect-video bg-gray-100 dark:bg-gray-800"
+            : "bg-gray-100 dark:bg-gray-800"
         }`}
       >
         {isLoading && !hasError && (
@@ -103,7 +103,7 @@ export default function VideoFeed({}: VideoFeedProps) {
           key={key}
           src={videoUrl}
           alt="Live Drone Feed"
-          className={`w-full h-full object-contain ${
+          className={`w-full h-full object-cover ${
             isLoading || hasError ? "invisible" : "visible"
           }`}
           onLoad={handleImageLoad}
