@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getVideoFeedUrl } from "@/lib/api";
 import { Maximize, RefreshCw, AlertCircle } from "lucide-react";
 
@@ -33,8 +33,30 @@ export default function VideoFeed({}: VideoFeedProps) {
   };
 
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+    const elem = document.documentElement;
+
+    if (!document.fullscreenElement) {
+      elem.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
   };
+
+  // Listen for fullscreen changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
 
   return (
     <div className="relative bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden flex flex-col h-full">
