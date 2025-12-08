@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useStats } from "@/hooks/useStats";
 import { useTheme } from "@/hooks/useTheme";
+import { resetStats } from "@/lib/api";
 import Header from "@/components/Header";
 import DualVideoFeed from "@/components/DualVideoFeed";
 import StatsDashboard from "@/components/StatsDashboard";
@@ -10,6 +12,10 @@ import { AlertCircle } from "lucide-react";
 export default function Home() {
   const { stats, isLoading, error, isConnected } = useStats();
   const { theme, toggleTheme, mounted } = useTheme();
+
+  useEffect(() => {
+    resetStats();
+  }, []);
 
   // Prevent flash of unstyled content
   if (!mounted) {

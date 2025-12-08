@@ -40,3 +40,14 @@ export const checkBackendHealth = async (): Promise<boolean> => {
     return false;
   }
 };
+
+export const resetStats = async (): Promise<void> => {
+  try {
+    await fetch(`${API_URL}/reset_stats`, {
+      method: "POST",
+      cache: "no-store",
+    });
+  } catch (error) {
+    console.error("Failed to reset stats:", error);
+  }
+};
