@@ -214,7 +214,7 @@ export default function DualVideoFeed({ theme }: DualVideoFeedProps) {
           key={state.key}
           src={url}
           alt={`${title} Feed`}
-          className={`w-full h-full object-cover ${
+          className={`absolute inset-0 w-full h-full object-contain ${
             state.isLoading || state.hasError ? "invisible" : "visible"
           }`}
           onLoad={() => handleImageLoad(type)}
