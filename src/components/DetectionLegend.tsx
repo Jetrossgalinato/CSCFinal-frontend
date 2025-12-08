@@ -2,7 +2,7 @@
 
 export default function DetectionLegend() {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800">
+    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-colors duration-300">
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         Detection Legend
       </h3>

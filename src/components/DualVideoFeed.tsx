@@ -170,29 +170,31 @@ export default function DualVideoFeed({ theme }: DualVideoFeedProps) {
       </div>
 
       {/* Video Content */}
-      <div className="relative flex-1 min-h-0 bg-gray-900">
+      <div className="relative flex-1 min-h-0 bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
         {state.isLoading && !state.hasError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
             <div className="flex flex-col items-center gap-2">
               <div
                 className={`w-10 h-10 border-3 border-t-transparent rounded-full animate-spin ${
                   type === "civilian" ? "border-green-500" : "border-red-500"
                 }`}
               />
-              <p className="text-xs text-gray-400">Loading {type} feed...</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                Loading {type} feed...
+              </p>
             </div>
           </div>
         )}
 
         {state.hasError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-900">
             <div className="flex flex-col items-center gap-2 text-center px-4">
               <AlertCircle
                 className={`w-10 h-10 ${
                   type === "civilian" ? "text-green-500" : "text-red-500"
                 }`}
               />
-              <p className="text-xs font-medium text-white">
+              <p className="text-xs font-medium text-gray-900 dark:text-white">
                 Failed to load {type} feed
               </p>
               <button
@@ -226,12 +228,12 @@ export default function DualVideoFeed({ theme }: DualVideoFeedProps) {
 
   return (
     <div
-      className={`relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden flex flex-col h-full ${
+      className={`relative bg-white dark:bg-gray-900 rounded-xl shadow-2xl overflow-hidden flex flex-col h-full transition-colors duration-300 ${
         isFullscreen ? "fixed inset-0 z-50 rounded-none" : ""
       }`}
     >
       {/* Main Header */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between flex-shrink-0 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800/50">
+      <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between flex-shrink-0 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-800/50 transition-colors duration-300">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-blue-500/10">
             <svg
@@ -276,7 +278,7 @@ export default function DualVideoFeed({ theme }: DualVideoFeedProps) {
       </div>
 
       {/* Split Screen Content */}
-      <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-0.5 bg-gray-800">
+      <div className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-0.5 bg-gray-200 dark:bg-gray-800 transition-colors duration-300">
         {/* Civilian Feed */}
         {renderVideoPanel(
           "civilian",
