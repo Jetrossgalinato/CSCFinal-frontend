@@ -1,47 +1,45 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { StatCardProps } from "@/types";
 
-export default function StatsCard({
-  label,
-  count,
-  icon,
-  colorClass,
-}: StatCardProps) {
+export default function StatsCard({ label, count, colorClass }: StatCardProps) {
   const [displayCount, setDisplayCount] = useState(0);
-  const prevCountRef = useRef(count);
 
   useEffect(() => {
-    // Animate counter when count changes
-    const prevCount = prevCountRef.current;
-    prevCountRef.current = count;
+    let startTime: number;
+    let animationFrameId: number;
+    const startCount = displayCount;
+    const endCount = count;
+    const duration = 2000; // 2 seconds for a smooth rolling effect
 
-    if (prevCount === count) {
-      setDisplayCount(count);
-      return;
-    }
+    if (startCount === endCount) return;
 
-    const duration = 300; // ms
-    const steps = 20;
-    const increment = (count - prevCount) / steps;
-    let currentStep = 0;
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
 
-    const timer = setInterval(() => {
-      currentStep++;
-      if (currentStep >= steps) {
-        setDisplayCount(count);
-        clearInterval(timer);
-      } else {
-        setDisplayCount(Math.round(prevCount + increment * currentStep));
+      // Ease out exponential
+      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+
+      const current = Math.round(startCount + (endCount - startCount) * ease);
+      setDisplayCount(current);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate);
       }
-    }, duration / steps);
+    };
 
-    return () => clearInterval(timer);
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-all hover:shadow-xl">
+    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-gray-800 transition-all duration-300 hover:shadow-xl">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">
@@ -52,9 +50,6 @@ export default function StatsCard({
           >
             {displayCount}
           </p>
-        </div>
-        <div className={`p-3 rounded-lg ${colorClass} bg-opacity-10`}>
-          {icon}
         </div>
       </div>
     </div>

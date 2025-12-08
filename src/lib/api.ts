@@ -24,8 +24,8 @@ export const fetchStats = async (): Promise<DetectionStats> => {
   }
 };
 
-export const getVideoFeedUrl = (): string => {
-  return `${API_URL}/video_feed`;
+export const getVideoFeedUrl = (feed: "civilian" | "soldier"): string => {
+  return `${API_URL}/video_feed/${feed}`;
 };
 
 export const checkBackendHealth = async (): Promise<boolean> => {
@@ -38,5 +38,16 @@ export const checkBackendHealth = async (): Promise<boolean> => {
   } catch (error) {
     console.error("Backend health check failed:", error);
     return false;
+  }
+};
+
+export const resetStats = async (): Promise<void> => {
+  try {
+    await fetch(`${API_URL}/reset_stats`, {
+      method: "POST",
+      cache: "no-store",
+    });
+  } catch (error) {
+    console.error("Failed to reset stats:", error);
   }
 };

@@ -1,15 +1,21 @@
 "use client";
 
+import { useEffect } from "react";
 import { useStats } from "@/hooks/useStats";
 import { useTheme } from "@/hooks/useTheme";
+import { resetStats } from "@/lib/api";
 import Header from "@/components/Header";
-import VideoFeed from "@/components/VideoFeed";
+import DualVideoFeed from "@/components/DualVideoFeed";
 import StatsDashboard from "@/components/StatsDashboard";
 import { AlertCircle } from "lucide-react";
 
 export default function Home() {
   const { stats, isLoading, error, isConnected } = useStats();
   const { theme, toggleTheme, mounted } = useTheme();
+
+  useEffect(() => {
+    resetStats();
+  }, []);
 
   // Prevent flash of unstyled content
   if (!mounted) {
@@ -24,9 +30,9 @@ export default function Home() {
         isConnected={isConnected}
       />
 
-      <main className="flex-1 w-full px-4 py-4 overflow-auto">
+      <main className="flex-1 w-full px-4 py-4 overflow-auto flex flex-col gap-4">
         {error && !isConnected && (
-          <div className="mb-6 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start gap-3">
+          <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-medium text-red-900 dark:text-red-200">
@@ -41,31 +47,29 @@ export default function Home() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-full max-w-full">
-          {/* Video Feed - Takes 2 columns on large screens */}
-          <div className="lg:col-span-2 flex flex-col">
-            <VideoFeed theme={theme} />
-          </div>
+        {/* Dual Video Feed - Full width */}
+        <div className="flex-1 min-h-[500px]">
+          <DualVideoFeed theme={theme} />
+        </div>
 
-          {/* Statistics Dashboard - Takes 1 column on large screens */}
-          <div className="lg:col-span-1 flex flex-col">
-            {isLoading && !isConnected ? (
-              <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Loading statistics...
-                  </p>
-                </div>
+        {/* Statistics Dashboard - Full width at bottom */}
+        <div className="w-full">
+          {isLoading && !isConnected ? (
+            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 flex items-center justify-center">
+              <div className="flex flex-col items-center gap-3">
+                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  Loading statistics...
+                </p>
               </div>
-            ) : (
-              <StatsDashboard stats={stats} theme={theme} />
-            )}
-          </div>
+            </div>
+          ) : (
+            <StatsDashboard stats={stats} theme={theme} />
+          )}
         </div>
 
         {/* Footer Info */}
-        <div className="mt-4 text-center">
+        <div className="text-center pb-2">
           <p className="text-xs text-gray-500 dark:text-gray-400">
             Real-time YOLOv8 Detection System • Updates every 500ms
           </p>

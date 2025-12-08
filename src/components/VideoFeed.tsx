@@ -14,7 +14,7 @@ export default function VideoFeed({}: VideoFeedProps) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [key, setKey] = useState(0);
 
-  const videoUrl = getVideoFeedUrl();
+  const videoUrl = getVideoFeedUrl("civilian");
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -125,7 +125,7 @@ export default function VideoFeed({}: VideoFeedProps) {
           key={key}
           src={videoUrl}
           alt="Live Drone Feed"
-          className={`w-full h-full object-cover ${
+          className={`absolute inset-0 w-full h-full object-contain ${
             isLoading || hasError ? "invisible" : "visible"
           }`}
           onLoad={handleImageLoad}
