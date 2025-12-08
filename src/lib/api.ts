@@ -24,8 +24,8 @@ export const fetchStats = async (): Promise<DetectionStats> => {
   }
 };
 
-export const getVideoFeedUrl = (): string => {
-  return `${API_URL}/video_feed`;
+export const getVideoFeedUrl = (feed: "civilian" | "soldier"): string => {
+  return `${API_URL}/video_feed/${feed}`;
 };
 
 export const checkBackendHealth = async (): Promise<boolean> => {
