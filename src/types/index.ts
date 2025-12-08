@@ -7,7 +7,6 @@ export interface DetectionStats {
 export interface StatCardProps {
   label: string;
   count: number;
-  icon: React.ReactNode;
   colorClass: string;
   theme: "light" | "dark";
 }

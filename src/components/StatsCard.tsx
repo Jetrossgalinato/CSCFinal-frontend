@@ -3,12 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { StatCardProps } from "@/types";
 
-export default function StatsCard({
-  label,
-  count,
-  icon,
-  colorClass,
-}: StatCardProps) {
+export default function StatsCard({ label, count, colorClass }: StatCardProps) {
   const [displayCount, setDisplayCount] = useState(0);
   const prevCountRef = useRef(count);
 
@@ -52,9 +47,6 @@ export default function StatsCard({
           >
             {displayCount}
           </p>
-        </div>
-        <div className={`p-3 rounded-lg ${colorClass} bg-opacity-10`}>
-          {icon}
         </div>
       </div>
     </div>
